@@ -29,7 +29,7 @@ Sync repositories by manifest:
 ```bash
 mkdir imx-yocto-bsp
 cd imx-yocto-bsp
-repo init -u https://github.com/NXPHoverGames/imx-manifest-navq95-private.git -b imx-linux-scarthgap -m imx-6.6.23-2.0.0-navq.xml
+repo init -u git@github.com:NXPHoverGames/imx-manifest-navq95-private.git -b imx-linux-scarthgap -m imx-6.6.23-2.0.0-navq.xml
 repo sync
 ```
 
