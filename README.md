@@ -1,96 +1,113 @@
-i.MX Repo Manifest README
-=========================
+NavQ95
+======
 
-This repo is used to download manifests for i.MX BSP releases.
+The [IMX yocto project users guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf) contains 
+detailed explanation on how to an build SD card image for the various iMX devices. For the NavQ95 there are a few exception that need to be taken 
+care of.
 
-Specific instructions reside in READMEs in each branch.
+See below table containing items that deviate from the manual:
 
-The branch name is based on the release type, Linux or Android, and the Yocto Project release name, with manifests in each branch tied to the base BSP release.
+| Item                   | Original                                    | New                                               |
+| -----------------------| ------------------------------------------- | ------------------------------------------------- |
+| imx-manifest repo URL  | https://github.com/nxp-imx/imx-manifest.git | https://github.com/NXPHoverGames/imx-manifest-navq95-private.git |
+| Manifest file          | imx-6.6.23-2.0.0.xml                        | imx-6.6.23-2.0.0-navq.xml                         |
+| Machine                | * (eg. imx95-19x19-lpddr5-evk)              | imx95-19x19-navqdesktop                           |
 
-For example, for i.MX Linux BSP releases based on Yocto Project `Scarthgap`, the branch is `imx-linux-scarthgap`.
+For a NavQ95 specific explanation refer to the [Build SD card image](#build-sd-card-image) and the [Flash image to SD card](#flash-image-to-sd-card) paragraphs on this page.
 
-Install the `repo` utility:
----------------------------
+There is no M7 software included in the image build by yocto and instead this is placed into NOR flash of the NavQ95. This should
+be [built](#build-nor-flash-image) and [flashed](#flash-nor-flash-image) to the NOR flash manually.
 
-To use this manifest repo, the `repo` tool must be installed first.
+Both SD card and NOR flash need the correct images for the NavQ95 to work properly.
 
-```
-$: mkdir ~/bin
-$: curl http://commondatastorage.googleapis.com/git-repo-downloads/repo  > ~/bin/repo
-$: chmod a+x ~/bin/repo
-$: PATH=${PATH}:~/bin
-```
+<a name="build-sd-card-image"></a>
 
-Install essential host packages
-------------------------------
-Your Build Host must install required packages for the Yocto build.
-Reference to the section "Build Host Packages" in the document "Yocto Project Quick build".
-- https://docs.yoctoproject.org/5.0.3/brief-yoctoprojectqs/index.html#build-host-packages
+Build SD card image
+-------------------
 
-Download the Yocto Project BSP
-------------------------------
-
-```
-$: mkdir <release>
-$: cd <release>
-$: repo init -u https://github.com/nxp-imx/imx-manifest -b <branch name> [ -m <release manifest>]
-$: repo sync
+Sync repositories by manifest:
+```bash
+mkdir imx-yocto-bsp
+cd imx-yocto-bsp
+repo init -u https://github.com/NXPHoverGames/imx-manifest-navq95-private.git -b imx-linux-scarthgap -m imx-6.6.23-2.0.0-navq.xml
+repo sync
 ```
 
-Each branch has detailed READMEs describing exact syntax.
-
-Examples
---------
-
-To download the 6.6.52-2.2.0 release
-```
-$: repo init -u https://github.com/nxp-imx/imx-manifest -b imx-linux-scarthgap -m imx-6.6.52-2.2.0.xml
-```
-To download the 6.6.36-2.1.0 release
-```
-$: repo init -u https://github.com/nxp-imx/imx-manifest -b imx-linux-scarthgap -m imx-6.6.36-2.1.0.xml
-```
-To download the 6.6.23-2.0.0 release
-```
-$: repo init -u https://github.com/nxp-imx/imx-manifest -b imx-linux-scarthgap -m imx-6.6.23-2.0.0.xml
+Setup build:
+```bash
+MACHINE=imx95-19x19-navqdesktop DISTRO=imx-desktop-xwayland source imx-setup-release.sh -b build-95-full
 ```
 
-Setup the build folder for a BSP release:
------------------------------------------
-
-Note: The remaining instructions are for setting up a BSP release only. For setting
-up a demo, please see `imx-manifest/README-<demo>` for further instructions.
-
-```
-$: [MACHINE=<machine>] [DISTRO=fsl-imx-<backend>] source ./imx-setup-release.sh -b bld-<backend>
-
-<machine>   defaults to `imx6qsabresd`
-<backend>   Graphics backend type
-    xwayland    Wayland with X11 support - default distro
-    wayland     Wayland
-    fb          Framebuffer (not supported for mx8)
+Optionally add below lines to conf/local.conf in case the host should stay responsive
+```bash
+BB_NUMBER_THREADS = "6"
+PARALLEL_MAKE = "-j 5"
 ```
 
-Note: If the poky community distro is used, then build breaks will happen with some
-components using our `meta-imx` layer.
-
-Examples:
-- Setup for XWayland.
+Start build:
+```bash
+bitbake imx-image-desktop
 ```
-$: MACHINE=imx8mnevk DISTRO=fsl-imx-xwayland source ./imx-setup-release.sh -b bld-xwayland
-```
-
-Build an image:
----------------
-
-```
-$: bitbake <image recipe>
+Or to start build and immediately detach the process from the console (may be convenient since this build may take a while)
+```bash
+nohup bitbake imx-image-desktop &
 ```
 
-Some image recipes:
+<a name="flash-image-to-sd-card"></a>
 
-Image Name           | Description
----------------------|---------------------------------------------------
-imx-image-core       | core image with basic graphics and no multimedia
-imx-image-multimedia | image with multimedia and graphics
-imx-image-full       | image with multimedia and machine learning and Qt
+Flash image to SD card
+----------------------
+
+To flash the yocto image to an SD card use the command below. Make sure you update the output file ```of=/dev/sdX``` to the block device that belong to the SD card.
+```bash
+cd /path/to/imx-yocto-bsp/build-95-full
+zstdcat tmp/deploy/images/imx95-19x19-navq/imx-image-desktop-imx95-19x19-navq.rootfs.wic.zst | sudo dd of=/dev/sdX bs=1M conv=fsync
+```
+
+<a name="build-nor-flash-image"></a>
+
+Build NOR flash image
+---------------------
+
+The M7 core runs the PX4 autopilot software and this need to be stored on the NOR flash.
+
+To build the PX4 software first clone the PX4 software and checkout the imx95-m7 branch:
+```bash
+git clone https://github.com/NXPHoverGames/PX4-Autopilot-NXP.git --recursive
+cd PX4-Autopilot
+git checkout imx95-m7
+```
+
+Then build the nxp_imx95_default target:
+```bash
+make nxp_imx95_default
+```
+
+<a name="flash-nor-flash-image"></a>
+
+Flash NOR flash image
+---------------------
+
+Install pyocd to flash the image through the on-board JTAG device.
+
+Clone pyocd into a directory of your preference and checkout the imx95 branch:
+```bash
+git clone https://github.com/NXPHoverGames/pyocd-private.git
+cd pyocd
+git checkout imx95
+```
+
+Build pyocd:
+```bash
+python3 -m pip install .
+```
+
+Power up the NavQ95 without any SD card inserted and with the host connected to the Debug USB port (J2)
+
+Run below command to flash the PX4 software to the NOR flash:
+```bash
+cd /path/to/PX4-Autopilot
+pyocd flash -t mimx95_cm33 ./build/nxp_imx95_default/nxp_imx95_default.bin -f 10m
+```
+
+:warning: Writing to NOR flash is not completely stable yet. Retry the pyocd flash command until pyocd displays it had only programmed 0 pages.
