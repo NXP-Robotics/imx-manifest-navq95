@@ -40,7 +40,7 @@
   </project>
   <project name="meta-matter" remote="imx" path="sources/meta-matter" revision="refs/tags/rel_imx_6.6.23-2.0.0" upstream="imx_matter_2024_q1-post" />
   <project name="meta-nxp-demo-experience" remote="imx-support" path="sources/meta-nxp-demo-experience" revision="refs/tags/rel_imx_6.6.23_2.0.0" upstream="scarthgap-6.6.23-2.0.0" />
-  <project name="meta-nxp-mr-private" remote="hovergames" path="sources/meta-nxp-desktop" revision="feb657ba5d4a51d772d5d6abad7bbe102177fffb" upstream="imx95-navq-lf-6.6.23">
+  <project name="meta-nxp-mr-private" remote="hovergames" path="sources/meta-nxp-desktop" revision="33552a3c4827b925925b4f7a560156eeda9e029b" upstream="imx95-navq-lf-6.6.23">
      <linkfile src="tools/imx-setup-release.sh" dest="imx-setup-release.sh"/>
   </project>
 
