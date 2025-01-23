@@ -71,15 +71,20 @@ Build NOR flash image
 
 The M7 core runs the PX4 autopilot software and this need to be stored on the NOR flash.
 
-To build the PX4 software first clone the PX4 software and checkout the imx95-m7 branch:
+Then clone the PX4 software and checkout the imx95-m7 branch:
 ```bash
-git clone https://github.com/NXPHoverGames/PX4-Autopilot-NXP.git --recursive
-cd PX4-Autopilot
-git checkout imx95-m7
+git clone git@github.com:NXPHoverGames/PX4-Autopilot-NXP.git -b imx95-m7 --recursive
+```
+
+Make sure your build environment is configured properly. See [PX4 guide](https://docs.px4.io/main/en/dev_setup/dev_env_linux_ubuntu.html) for more information.
+In short, running this script will install all build dependencies:
+```bash
+bash ./PX4-Autopilot-NXP/Tools/setup/ubuntu.sh
 ```
 
 Then build the nxp_imx95_default target:
 ```bash
+cd PX4-Autopilot-NXP
 make nxp_imx95_default
 ```
 
@@ -89,20 +94,20 @@ Flash NOR flash image
 ---------------------
 
 Install pyocd to flash the image through the on-board JTAG device.
+This is tested with python 3.10 but python 3.9 should suffice.
 
 Clone pyocd into a directory of your preference and checkout the imx95 branch:
 ```bash
-git clone https://github.com/NXPHoverGames/pyocd-private.git
-cd pyocd
-git checkout imx95
+git clone git@github.com:NXPHoverGames/pyocd-private.git -b imx95
 ```
 
 Build pyocd:
 ```bash
+cd pyocd-private
 python3 -m pip install .
 ```
 
-Power up the NavQ95 without any SD card inserted and with the host connected to the Debug USB port (J2)
+Remove any SD card and connect the Debug USB port (J2) to you host. Then apply 12V to the J15 connector to power up the board.
 
 Run below command to flash the PX4 software to the NOR flash:
 ```bash
