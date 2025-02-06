@@ -46,11 +46,16 @@ PARALLEL_MAKE = "-j 5"
 
 Start build:
 ```bash
-bitbake imx-image-desktop
+bitbake imx-image-mr
 ```
 Or to start build and immediately detach the process from the console (may be convenient since this build may take a while)
 ```bash
-nohup bitbake imx-image-desktop &
+nohup bitbake imx-image-mr &
+```
+
+To build an image with ROS2 preinstalled:
+```bash
+bitbake imx-image-ros
 ```
 
 <a name="flash-image-to-sd-card"></a>
