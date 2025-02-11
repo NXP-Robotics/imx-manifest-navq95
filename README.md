@@ -10,7 +10,7 @@ See below table containing items that deviate from the manual:
 | Item                   | Original                                    | New                                               |
 | -----------------------| ------------------------------------------- | ------------------------------------------------- |
 | imx-manifest repo URL  | https://github.com/nxp-imx/imx-manifest.git | https://github.com/NXPHoverGames/imx-manifest-navq95-private.git |
-| Manifest file          | imx-6.6.23-2.0.0.xml                        | imx-6.6.23-2.0.0-navq.xml                         |
+| Manifest file          | imx-6.6.52-2.2.0.xml                        | imx-6.6.52-2.2.0-navq.xml                         |
 | Machine                | * (eg. imx95-19x19-lpddr5-evk)              | imx95-19x19-navqdesktop                           |
 
 For a NavQ95 specific explanation refer to the [Build SD card image](#build-sd-card-image) and the [Flash image to SD card](#flash-image-to-sd-card) paragraphs on this page.
@@ -29,7 +29,7 @@ Sync repositories by manifest:
 ```bash
 mkdir imx-yocto-bsp
 cd imx-yocto-bsp
-repo init -u git@github.com:NXPHoverGames/imx-manifest-navq95-private.git -b imx-linux-scarthgap -m imx-6.6.23-2.0.0-navq.xml
+repo init -u git@github.com:NXPHoverGames/imx-manifest-navq95-private.git -b imx-linux-scarthgap -m imx-6.6.52-2.2.0-navq.xml
 repo sync
 ```
 
