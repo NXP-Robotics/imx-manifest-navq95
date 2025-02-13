@@ -15,9 +15,6 @@ See below table containing items that deviate from the manual:
 
 For a NavQ95 specific explanation refer to the [Build SD card image](#build-sd-card-image) and the [Flash image to SD card](#flash-image-to-sd-card) paragraphs on this page.
 
-There is no M7 software included in the image build by yocto and instead this is placed into NOR flash of the NavQ95. This should
-be [built](#build-nor-flash-image) and [flashed](#flash-nor-flash-image) to the NOR flash manually.
-
 Both SD card and NOR flash need the correct images for the NavQ95 to work properly.
 
 <a name="build-sd-card-image"></a>
@@ -71,7 +68,7 @@ zstdcat tmp/deploy/images/imx95-19x19-navq/imx-image-desktop-imx95-19x19-navq.ro
 
 <a name="build-nor-flash-image"></a>
 
-Build NOR flash image
+Build NOR flash image for M7 Application
 ---------------------
 
 The M7 core runs the PX4 autopilot software and this need to be stored on the NOR flash.
@@ -139,7 +136,7 @@ Insert the SD card with the image installed. Connect the Debug USB port (J2) to 
 
 <img src="navq95-ports-west.png" alt="navq95 ports" style="width:50%;"/>
 
-The USB port gives access to the tty's of linux and PX4/NuttX.
+The USB port gives access to the tty's of linux and PX4/NuttX (if flashed to the NOR flash).
 
 The default linux user is 'user' (password: 'user')
 
