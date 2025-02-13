@@ -63,7 +63,7 @@ Flash image to SD card
 To flash the yocto image to an SD card use the command below. Make sure you update the output file ```of=/dev/sdX``` to the block device that belong to the SD card.
 ```bash
 cd /path/to/imx-yocto-bsp/build-95-full
-zstdcat tmp/deploy/images/imx95-19x19-navq/imx-image-desktop-imx95-19x19-navq.rootfs.wic.zst | sudo dd of=/dev/sdX bs=1M conv=fsync
+zstdcat tmp/deploy/images/imx95-19x19-navq/imx-image-mr-imx95-19x19-navq.rootfs.wic.zst | sudo dd of=/dev/sdX bs=1M conv=fsync
 ```
 
 <a name="build-nor-flash-image"></a>
