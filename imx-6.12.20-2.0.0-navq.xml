@@ -41,7 +41,7 @@
   </project>
   <project name="meta-nxp-connectivity" remote="imx" path="sources/meta-nxp-connectivity" revision="refs/tags/rel_imx_6.12.20_2.0.0" upstream="imx_matter_2025_q1-post" />
   <project name="meta-nxp-demo-experience" remote="imx-support" path="sources/meta-nxp-demo-experience" revision="refs/tags/rel_imx_6.12.20_2.0.0" upstream="walnascar-6.12.20-2.0.0" />
-  <project name="meta-nxp-mr-private" remote="hovergames" path="sources/meta-nxp-mr" revision="43067e23f9a6c32a58338c19420763cb5a2444dd" upstream="lf-6.6.52-2.2.0-scarthgap-navq95">
+  <project name="meta-nxp-mr-private" remote="hovergames" path="sources/meta-nxp-mr" revision="6f080db6065cf5dd8df6815b7e4647186a07f249" upstream="lf-6.6.52-2.2.0-scarthgap-navq95">
      <linkfile src="tools/imx-setup-release.sh" dest="imx-setup-release.sh"/>
   </project>
 
