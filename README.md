@@ -10,7 +10,7 @@ See below table containing items that deviate from the manual:
 | Item                   | Original                                    | New                                               |
 | -----------------------| ------------------------------------------- | ------------------------------------------------- |
 | imx-manifest repo URL  | https://github.com/nxp-imx/imx-manifest.git | https://github.com/NXPHoverGames/imx-manifest-navq95-private.git |
-| Manifest file          | imx-6.6.52-2.2.0.xml                        | imx-6.6.52-2.2.0-navq.xml                         |
+| Manifest file          | imx-6.12.20-2.0.0.xml                        | imx-6.12.20-2.0.0-navq.xml                         |
 | Machine                | * (eg. imx95-19x19-lpddr5-evk)              | imx95-19x19-navqdesktop                           |
 
 For a NavQ95 specific explanation refer to the [Build SD card image](#build-sd-card-image) and the [Flash image to SD card](#flash-image-to-sd-card) paragraphs on this page.
@@ -26,7 +26,7 @@ Sync repositories by manifest:
 ```bash
 mkdir imx-yocto-bsp
 cd imx-yocto-bsp
-repo init -u git@github.com:NXPHoverGames/imx-manifest-navq95-private.git -b imx-linux-scarthgap -m imx-6.6.52-2.2.0-navq.xml
+repo init -u git@github.com:NXPHoverGames/imx-manifest-navq95-private.git -b imx-linux-walnascar -m imx-6.12.20-2.0.0-navq.xml
 repo sync
 ```
 
@@ -68,30 +68,6 @@ zstdcat tmp/deploy/images/imx95-19x19-navq/imx-image-mr-imx95-19x19-navq.rootfs.
 
 <a name="build-nor-flash-image"></a>
 
-Build NOR flash image for M7 Application
----------------------
-
-The M7 core runs the PX4 autopilot software and this need to be stored on the NOR flash.
-
-Then clone the PX4 software and checkout the imx95-m7 branch:
-```bash
-git clone git@github.com:NXPHoverGames/PX4-Autopilot-NXP.git -b imx95-m7 --recursive
-```
-
-Make sure your build environment is configured properly. See [PX4 guide](https://docs.px4.io/main/en/dev_setup/dev_env_linux_ubuntu.html) for more information.
-In short, running this script will install all build dependencies:
-```bash
-bash ./PX4-Autopilot-NXP/Tools/setup/ubuntu.sh
-```
-
-Then build the nxp_imx95_default target:
-```bash
-cd PX4-Autopilot-NXP
-make nxp_imx95_default
-```
-
-<a name="flash-nor-flash-image"></a>
-
 Flash NOR flash image
 ---------------------
 
@@ -112,10 +88,10 @@ python3 -m pip install .
 Make sure the DIP switches are correctly configured as described in [Power up](#power-up-navq95).
 Remove any SD card and connect the Debug USB port (J2) to your host. Then apply 12V to the J15 connector to power up the board. Make sure to do this in the given order.
 
-Run below command to flash the PX4 software to the NOR flash:
+Run below command to flash the built RTOS software to the NOR flash:
 ```bash
-cd /path/to/PX4-Autopilot
-pyocd flash -t mimx95_cm33 ./build/nxp_imx95_default/nxp_imx95_default.bin -f 10m
+
+pyocd flash -t mimx95_cm33 path/to/built/file.bin -f 10m
 ```
 
 :warning: Writing to NOR flash is not completely stable yet. Retry the pyocd flash command until pyocd displays it had only programmed 0 pages.
@@ -136,12 +112,6 @@ Insert the SD card with the image installed. Connect the Debug USB port (J2) to 
 
 <img src="navq95-ports-west.png" alt="navq95 ports" style="width:50%;"/>
 
-The USB port gives access to the tty's of linux and PX4/NuttX (if flashed to the NOR flash).
+The USB port gives access to the tty's of linux and RTOS (if flashed to the NOR flash).
 
 The default linux user is 'user' (password: 'user')
-
-:warning: PX4 filesystem depends the /px4 directory on the linux root fs. Currently this is not automatically created by the yocto build.
-          Create this directory by this command on linux:
-          ```
-          sudo mkdir /px4
-          ```
