@@ -1,5 +1,4 @@
-NavQ95
-======
+# NavQ95
 
 The [IMX yocto project users guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf) contains 
 detailed explanation on how to an build SD card image for the various iMX devices. For the NavQ95 there are a few exception that need to be taken 
@@ -10,7 +9,7 @@ See below table containing items that deviate from the manual:
 | Item                   | Original                                    | New                                               |
 | -----------------------| ------------------------------------------- | ------------------------------------------------- |
 | imx-manifest repo URL  | https://github.com/nxp-imx/imx-manifest.git | https://github.com/NXPHoverGames/imx-manifest-navq95-private.git |
-| Manifest file          | imx-6.12.20-2.0.0.xml                        | imx-6.12.20-2.0.0-navq.xml                         |
+| Manifest file          | imx-6.12.20-2.0.0.xml                       | imx-6.12.20-2.0.0-navq.xml                        |
 | Machine                | * (eg. imx95-19x19-lpddr5-evk)              | imx95-19x19-navqdesktop                           |
 
 For a NavQ95 specific explanation refer to the [Build SD card image](#build-sd-card-image) and the [Flash image to SD card](#flash-image-to-sd-card) paragraphs on this page.
@@ -19,8 +18,7 @@ Both SD card and NOR flash need the correct images for the NavQ95 to work proper
 
 <a name="build-sd-card-image"></a>
 
-Build SD card image
--------------------
+## Build SD card image
 
 Sync repositories by manifest:
 ```bash
@@ -57,8 +55,7 @@ bitbake imx-image-ros
 
 <a name="flash-image-to-sd-card"></a>
 
-Flash image to SD card
-----------------------
+## Flash image to SD card
 
 To flash the yocto image to an SD card use the command below. Make sure you update the output file ```of=/dev/sdX``` to the block device that belong to the SD card.
 ```bash
@@ -68,8 +65,7 @@ zstdcat tmp/deploy/images/imx95-19x19-navq/imx-image-mr-imx95-19x19-navq.rootfs.
 
 <a name="build-nor-flash-image"></a>
 
-Flash NOR flash image
----------------------
+## Flash NOR flash image
 
 Install pyocd to flash the image through the on-board JTAG device.
 This is tested with python 3.10 but python 3.9 should suffice.
@@ -99,8 +95,7 @@ pyocd flash -t mimx95_cm33 path/to/built/file.bin -f 10m
 
 <a name="power-up-navq95"></a>
 
-Power up NavQ95
-===============
+# Power up NavQ95
 
 Before powerering up the NavQ95 make sure the DIP switches have the correct settings. They must be configured like the image below.
 
