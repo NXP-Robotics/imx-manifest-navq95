@@ -14,8 +14,6 @@ See below table containing items that deviate from the manual:
 
 For a NavQ95 specific explanation refer to the [Build SD card image](#build-sd-card-image) and the [Flash image to SD card](#flash-image-to-sd-card) paragraphs on this page.
 
-Both SD card and NOR flash need the correct images for the NavQ95 to work properly.
-
 <a name="build-sd-card-image"></a>
 
 ## Build SD card image
@@ -63,7 +61,7 @@ cd /path/to/imx-yocto-bsp/build-95-full
 zstdcat tmp/deploy/images/imx95-19x19-navq/imx-image-mr-imx95-19x19-navq.rootfs.wic.zst | sudo dd of=/dev/sdX bs=1M conv=fsync
 ```
 
-<a name="build-nor-flash-image"></a>
+<a name="flash-nor-flash-image"></a>
 
 ## Flash NOR flash image
 
@@ -91,7 +89,6 @@ pyocd flash -t mimx95_cm33 path/to/built/file.bin -f 10m
 ```
 
 :warning: Writing to NOR flash is not completely stable yet. Retry the pyocd flash command until pyocd displays it had only programmed 0 pages.
-
 
 <a name="power-up-navq95"></a>
 
