@@ -10,7 +10,7 @@ See below table containing items that deviate from the manual:
 | -----------------------| ------------------------------------------- | ------------------------------------------------- |
 | imx-manifest repo URL  | https://github.com/nxp-imx/imx-manifest.git | https://github.com/NXPHoverGames/imx-manifest-navq95-private.git |
 | Manifest file          | imx-6.12.20-2.0.0.xml                       | imx-6.12.20-2.0.0-navq.xml                        |
-| Machine                | * (eg. imx95-19x19-lpddr5-evk)              | imx95-19x19-navqdesktop                           |
+| Machine                | * (eg. imx95-19x19-lpddr5-evk)              | imx95-navqadesktop                                |
 
 For a NavQ95 specific explanation refer to the [Build SD card image](#build-sd-card-image) and the [Flash image to SD card](#flash-image-to-sd-card) paragraphs on this page.
 
@@ -28,7 +28,7 @@ repo sync
 
 Setup build:
 ```bash
-MACHINE=imx95-19x19-navqdesktop DISTRO=imx-desktop-xwayland source imx-setup-release.sh -b build-95-full
+MACHINE=imx95-navqadesktop DISTRO=imx-desktop-xwayland source imx-setup-release.sh -b build-95-full
 ```
 
 Optionally add below lines to conf/local.conf in case the host should stay responsive
@@ -58,7 +58,7 @@ bitbake imx-image-ros
 To flash the yocto image to an SD card use the command below. Make sure you update the output file ```of=/dev/sdX``` to the block device that belong to the SD card.
 ```bash
 cd /path/to/imx-yocto-bsp/build-95-full
-zstdcat tmp/deploy/images/imx95-19x19-navq/imx-image-mr-imx95-19x19-navq.rootfs.wic.zst | sudo dd of=/dev/sdX bs=1M conv=fsync
+zstdcat tmp/deploy/images/imx95-navq/imx-image-mr-imx95-navq.rootfs.wic.zst | sudo dd of=/dev/sdX bs=1M conv=fsync
 ```
 
 <a name="flash-nor-flash-image"></a>
