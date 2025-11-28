@@ -39,16 +39,16 @@ PARALLEL_MAKE = "-j 5"
 
 Start build:
 ```bash
-bitbake imx-image-mr
+bitbake mc:imx95-navqdesktop:imx-image-mr
 ```
 Or to start build and immediately detach the process from the console (may be convenient since this build may take a while)
 ```bash
-nohup bitbake imx-image-mr &
+nohup bitbake mc:imx95-navqdesktop:imx-image-mr &
 ```
 
 To build an image with ROS2 preinstalled:
 ```bash
-bitbake imx-image-ros
+bitbake mc:imx95-navqdesktop:imx-image-ros
 ```
 
 <a name="flash-image-to-sd-card"></a>
@@ -58,7 +58,12 @@ bitbake imx-image-ros
 To flash the yocto image to an SD card use the command below. Make sure you update the output file ```of=/dev/sdX``` to the block device that belong to the SD card.
 ```bash
 cd /path/to/imx-yocto-bsp/build-95-full
-zstdcat tmp/deploy/images/imx95-navq/imx-image-mr-imx95-navq.rootfs.wic.zst | sudo dd of=/dev/sdX bs=1M conv=fsync
+
+# Deploy mc:imx95-navqdesktop:imx-image-mr on /dev/sdX
+zstdcat tmp-imx95-navq/deploy/images/imx95-navq/imx-image-mr-imx95-navq.rootfs.wic.zst | sudo dd of=/dev/sdX bs=1M conv=fsync
+
+# Deploy mc:imx95-navqdesktop:imx-image-ros on /dev/sdX
+zstdcat tmp-imx95-navq/deploy/images/imx95-navq/imx-image-ros-imx95-navq.rootfs.wic.zst | sudo dd of=/dev/sdX bs=1M conv=fsync
 ```
 
 <a name="flash-nor-flash-image"></a>

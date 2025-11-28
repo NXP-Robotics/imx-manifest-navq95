@@ -40,9 +40,10 @@
   </project>
   <project name="meta-nxp-connectivity" remote="imx" path="sources/meta-nxp-connectivity" revision="refs/tags/rel_imx_6.12.20_2.0.0" upstream="imx_matter_2025_q1-post" />
   <project name="meta-nxp-demo-experience" remote="imx-support" path="sources/meta-nxp-demo-experience" revision="refs/tags/rel_imx_6.12.20_2.0.0" upstream="walnascar-6.12.20-2.0.0" />
-  <project name="meta-nxp-mr-private" remote="hovergames" path="sources/meta-nxp-mr" revision="6ea9d547362a35fe005da643e13413f8e5be3414" upstream="lf-6.12.20-2.0.0-walnascar-navq95">
+  <project name="meta-nxp-mr-private" remote="hovergames" path="sources/meta-nxp-mr" revision="e90cbfb8be4d0bce8be77898f74e4430783295e0" upstream="lf-6.12.20-2.0.0-walnascar-navq95">
      <linkfile src="tools/imx-setup-release.sh" dest="imx-setup-release.sh"/>
   </project>
+  <project name="meta-zephyr" remote="yp" path="sources/meta-zephyr" revision="3617fcdfd0f232dcaff4a153e667c26445b2077c" upstream="walnascar" />
 
 
 </manifest>
