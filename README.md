@@ -8,7 +8,7 @@ See below table containing items that deviate from the manual:
 
 | Item                   | Original                                    | New                                               |
 | -----------------------| ------------------------------------------- | ------------------------------------------------- |
-| imx-manifest repo URL  | https://github.com/nxp-imx/imx-manifest.git | https://github.com/NXPHoverGames/imx-manifest-navq95-private.git |
+| imx-manifest repo URL  | https://github.com/nxp-imx/imx-manifest.git | https://github.com/NXP-Robotics/imx-manifest-navq95-private.git |
 | Manifest file          | imx-6.12.20-2.0.0.xml                       | imx-6.12.20-2.0.0-navq.xml                        |
 | Machine                | * (eg. imx95-19x19-lpddr5-evk)              | imx95-navqadesktop                                |
 
@@ -22,7 +22,7 @@ Sync repositories by manifest:
 ```bash
 mkdir imx-yocto-bsp
 cd imx-yocto-bsp
-repo init -u git@github.com:NXPHoverGames/imx-manifest-navq95-private.git -b imx-linux-walnascar -m imx-6.12.20-2.0.0-navq.xml
+repo init -u git@github.com:NXP-Robotics/imx-manifest-navq95-private.git -b imx-linux-walnascar -m imx-6.12.20-2.0.0-navq.xml
 repo sync
 ```
 
@@ -75,7 +75,7 @@ This is tested with python 3.10 but python 3.9 should suffice.
 
 Clone pyocd into a directory of your preference and checkout the imx95 branch:
 ```bash
-git clone git@github.com:NXPHoverGames/pyocd-private.git -b imx95
+git clone git@github.com:NXP-Robotics/pyocd-private.git -b imx95
 ```
 
 Build pyocd:
