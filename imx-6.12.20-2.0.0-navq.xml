@@ -14,7 +14,7 @@
 
   <remote name="imx"         fetch="https://github.com/nxp-imx"/>
   <remote name="imx-support" fetch="https://github.com/nxp-imx-support"/>
-  <remote name="nxp-robotics"  fetch="ssh://git@github.com/nxp-robotics/"/>
+  <remote name="nxp-robotics"  fetch="https://git@github.com/nxp-robotics/"/>
 
   <project name="poky" remote="yp" path="sources/poky" revision="9b96fdbb0cab02f4a6180e812b02bc9d4c41b1a5" upstream="walnascar" />
   <project name="meta-openembedded" remote="oe" path="sources/meta-openembedded" revision="0d2d2d193a1619b6dbebaf335f1ef785478049e3" upstream="walnascar" />
@@ -40,7 +40,7 @@
   </project>
   <project name="meta-nxp-connectivity" remote="imx" path="sources/meta-nxp-connectivity" revision="refs/tags/rel_imx_6.12.20_2.0.0" upstream="imx_matter_2025_q1-post" />
   <project name="meta-nxp-demo-experience" remote="imx-support" path="sources/meta-nxp-demo-experience" revision="refs/tags/rel_imx_6.12.20_2.0.0" upstream="walnascar-6.12.20-2.0.0" />
-  <project name="meta-nxp-mr-private" remote="nxp-robotics" path="sources/meta-nxp-mr" revision="2486b25f70080dc88c01dc1f7bf97127d77629c5" upstream="lf-6.12.20-2.0.0-walnascar-navq95">
+  <project name="meta-nxp-mr" remote="nxp-robotics" path="sources/meta-nxp-mr" revision="88bd57f5b33ecdeac46b5c1dbf811b8328ff78d6" upstream="lf-6.12.20-2.0.0-walnascar-navq95">
      <linkfile src="tools/imx-setup-release.sh" dest="imx-setup-release.sh"/>
   </project>
   <project name="meta-zephyr" remote="yp" path="sources/meta-zephyr" revision="3617fcdfd0f232dcaff4a153e667c26445b2077c" upstream="walnascar" />
