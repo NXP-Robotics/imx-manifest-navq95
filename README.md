@@ -93,7 +93,8 @@ Run below command to flash the built RTOS software to the NOR flash:
 pyocd flash -t mimx95_cm33_mx25um path/to/built/file.bin -f 10m
 ```
 
-:warning: Writing to NOR flash is not completely stable yet. Retry the pyocd flash command until pyocd displays it had only programmed 0 pages.
+> [!WARNING]
+> Writing to NOR flash is not completely stable yet. Retry the pyocd flash command until pyocd displays it had only programmed 0 pages.
 
 <a name="power-up-navq95"></a>
 
@@ -121,3 +122,22 @@ Insert the SD card with the image installed. Then apply 9-52V to the J19 connect
 The USB port gives access to the tty's of linux and RTOS (if flashed to the NOR flash).
 
 The default linux user is 'user' (password: 'user')
+
+# Optional flashing the eMMC
+
+Set the boot switches into "Serial Downloader on USB3.0 (J13)" and insert a USB-C cable from your PC to J13 and power up the NavQ95.
+
+Then download/install UUU from https://github.com/nxp-imx/mfgtools
+
+> [!NOTE]
+> The bootloader for flashing is located on this repo under as `MR-NAVQ95B-SERIAL-DOWNLOAD.bin`
+
+To flash your image/wic use the following command
+
+```
+ ./uuu.exe -b emmc_all MR-NAVQ95B-SERIAL-DOWNLOAD.bin <patch.to.wic.file>
+```
+
+After flashing unpower the board.
+
+Set the boot switches to "Boot from eMMC" and power up the NavQ95.
