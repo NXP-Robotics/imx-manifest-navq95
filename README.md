@@ -10,7 +10,7 @@ See below table containing items that deviate from the manual:
 | -----------------------| ------------------------------------------- | ------------------------------------------------- |
 | imx-manifest repo URL  | https://github.com/nxp-imx/imx-manifest.git | https://github.com/NXP-Robotics/imx-manifest-navq95-private.git |
 | Manifest file          | imx-6.12.20-2.0.0.xml                       | imx-6.12.20-2.0.0-navq.xml                        |
-| Machine                | * (eg. imx95-19x19-lpddr5-evk)              | imx95-navqadesktop                                |
+| Machine                | * (eg. imx95-19x19-lpddr5-evk)              | imx95-navqbdesktop                                |
 
 For a NavQ95 specific explanation refer to the [Build SD card image](#build-sd-card-image) and the [Flash image to SD card](#flash-image-to-sd-card) paragraphs on this page.
 
@@ -28,7 +28,7 @@ repo sync
 
 Setup build:
 ```bash
-MACHINE=imx95-navqadesktop DISTRO=imx-desktop-xwayland source imx-setup-release.sh -b build-95-full
+MACHINE=imx95-navqbdesktop DISTRO=imx-desktop-xwayland source imx-setup-release.sh -b build-95-full
 ```
 
 Optionally add below lines to conf/local.conf in case the host should stay responsive
@@ -73,9 +73,9 @@ zstdcat tmp-imx95-navq/deploy/images/imx95-navq/imx-image-ros-imx95-navq.rootfs.
 Install pyocd to flash the image through the on-board JTAG device.
 This is tested with python 3.10 but python 3.9 should suffice.
 
-Clone pyocd into a directory of your preference and checkout the imx95 branch:
+Clone pyocd into a directory of your preference and checkout the `pr-imx95` branch:
 ```bash
-git clone git@github.com:NXP-Robotics/pyocd-private.git -b imx95
+git clone https://github.com/NXP-Robotics/pyOCD -b pr-imx95
 ```
 
 Build pyocd:
@@ -90,7 +90,7 @@ Remove any SD card and connect the Debug USB port (J2) to your host. Then apply 
 Run below command to flash the built RTOS software to the NOR flash:
 ```bash
 
-pyocd flash -t mimx95_cm33 path/to/built/file.bin -f 10m
+pyocd flash -t mimx95_cm33_mx25um path/to/built/file.bin -f 10m
 ```
 
 :warning: Writing to NOR flash is not completely stable yet. Retry the pyocd flash command until pyocd displays it had only programmed 0 pages.
@@ -99,15 +99,24 @@ pyocd flash -t mimx95_cm33 path/to/built/file.bin -f 10m
 
 # Power up NavQ95
 
-Before powerering up the NavQ95 make sure the DIP switches have the correct settings. They must be configured like the image below.
+Before powerering up the NavQ95 make sure the DIP switches have the correct settings. They must be configured like the image below to boot from the SD card.
 
 <img src="dip-switches.png" alt="navq95 ports" style="width:20%;"/>
 
-Insert the SD card with the image installed. Connect the Debug USB port (J2) to your host. Then apply 12V to the J15 connector to power up the board.
+To change the boot device see table below for different boot modes
 
-:warning: Currently it is important to connect the USB and power supply in that order. Otherwise the board won't completely power up. This can be fixed in software and will probably happen soon.
+| **BOOT_MODE[3:0]** | **SW1** | **SW2** | **SW3** | **SW4** |          **Boot Device**          |
+|:------------------:|---------|---------|---------|---------|:---------------------------------:|
+| `1001`             | ON      | OFF     | OFF     | ON      | Serial Downloader on USB3.0 (J13) |
+| `1010`             | OFF     | ON      | OFF     | ON      | Boot from eMMC                    |
+| `1011`             | ON      | ON      | OFF     | ON      | Boot from SD Card                 |
+| `1100`             | OFF     | OFF     | ON      | ON      | Boot from Octal Flash             |
 
-<img src="navq95-ports-west.png" alt="navq95 ports" style="width:50%;"/>
+
+
+Insert the SD card with the image installed. Then apply 9-52V to the J19 connector to power up the board.
+
+<img src="mr_navq95-ports.png" alt="navq95 ports" style="width:50%;"/>
 
 The USB port gives access to the tty's of linux and RTOS (if flashed to the NOR flash).
 
