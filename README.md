@@ -123,21 +123,45 @@ The USB port gives access to the tty's of linux and RTOS (if flashed to the NOR 
 
 The default linux user is 'user' (password: 'user')
 
-# Optional flashing the eMMC
+# Flashing the eMMC on NavQ95 (Optional)
 
-Set the boot switches into "Serial Downloader on USB3.0 (J13)" and insert a USB-C cable from your PC to J13 and power up the NavQ95.
+This guide explains how to flash a `.wic` image onto the NavQ95’s eMMC instead of the SD card using **UUU** (NXP’s Universal Update Utility).
 
-Then download/install UUU from https://github.com/nxp-imx/mfgtools
+
+## 1. Set the Board to **Serial Downloader Mode**
+
+1. Configure the boot switches to **Serial Downloader on USB3.0 (J13)**.
+2. Connect a USB‑C cable from your host PC to **J13**.
+3. Power on the NavQ95.
+
+## 2. Install **UUU**
+
+Download and install UUU from the official repository:
+
+- https://github.com/nxp-imx/mfgtools
+
+
+## 3. Load the SPL Bootloader
+
+Load the temporary SPL loader so UUU can communicate with the board
 
 > [!NOTE]
-> The bootloader for flashing is located on this repo under as `MR-NAVQ95B-SERIAL-DOWNLOAD.bin`
-
-To flash your image/wic use the following command
+> The SPL image required for flashing the NavQ95 is included in this repo as **`MR-NAVQ95B-SERIAL-DOWNLOAD.bin`**
 
 ```
- ./uuu.exe -b emmc_all MR-NAVQ95B-SERIAL-DOWNLOAD.bin <patch.to.wic.file>
+ ./uuu.exe -b spl MR-NAVQ95B-SERIAL-DOWNLOAD.bin
 ```
 
-After flashing unpower the board.
+## 4. Flash the `.wic` Image to eMMC
 
-Set the boot switches to "Boot from eMMC" and power up the NavQ95.
+Replace the placeholder with the path to your image:
+
+```
+ ./uuu.exe -b emmc_all <patch.to.wic.file>
+```
+
+## 5. Final Steps
+
+1. Power off the NavQ95.
+2. Set the boot switches to Boot from eMMC.
+3. Power on the board, it should now boot from the new eMMC image.
