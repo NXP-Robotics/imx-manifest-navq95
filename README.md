@@ -80,11 +80,21 @@ git clone https://github.com/NXP-Robotics/pyOCD -b pr-imx95
 
 Build pyocd:
 ```bash
-cd pyocd-private
+cd pyOCD
 python3 -m pip install .
 ```
+> [!WARNING]
+> On an newer Ubuntu system python is externally managed (installed via apt package manager). Therefore running the pyocd build requires a python virtual environment!
+> run the following commands in the pyOCD directory:
+> ```bash
+> python3 -m venv ~/venv
+> source ~/venv/bin/activate
+> python3 -m pip install .
+> ```
+> this will install pyOCD in the virtual environment without harmin the Ubuntu python installation.
+> the flash command below needs to run consequently in the same venv shell.
 
-Make sure the DIP switches are correctly configured as described in [Power up](#power-up-navq95).
+Make sure the DIP switches are correctly configured as described in [Power up](#power-up-navq95). They need to be set to Boot from Octal Flash   
 Remove any SD card and connect the Debug USB port (J2) to your host. Then apply 12V to the J15 connector to power up the board. Make sure to do this in the given order.
 
 Run below command to flash the built RTOS software to the NOR flash:
