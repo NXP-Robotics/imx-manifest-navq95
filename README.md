@@ -85,7 +85,7 @@ python3 -m pip install .
 ```
 
 Make sure the DIP switches are correctly configured as described in [Power up](#power-up-navq95).
-Remove any SD card and connect the Debug USB port (J2) to your host. Then apply 12V to the J15 connector to power up the board. Make sure to do this in the given order.
+Remove any SD card and then apply 12V to the J9 connector to power up the board.
 
 Run below command to flash the built RTOS software to the NOR flash:
 ```bash
@@ -115,7 +115,7 @@ To change the boot device see table below for different boot modes
 
 
 
-Insert the SD card with the image installed. Then apply 9-52V to the J19 connector to power up the board.
+Insert the SD card with the image installed. Then apply 9-52V to the J9 connector to power up the board.
 
 <img src="mr_navq95-ports.png" alt="navq95 ports" style="width:50%;"/>
 
