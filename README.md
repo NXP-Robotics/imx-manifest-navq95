@@ -98,7 +98,7 @@ Remove any SD card and then apply 12V to the J9 connector to power up the board.
 
 Run below command to flash the built RTOS software to the NOR flash:
 ```bash
-pyocd flash -t mimx95_cm33_mx25um path/to/built/file.bin -f 10m
+pyocd flash -t mimx95_cm33_mx25um --base-address 0x28020000 path/to/built/file.bin -f 10m
 ```
 
 > [!WARNING]
