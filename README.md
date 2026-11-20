@@ -1,4 +1,11 @@
-# NavQ95
+# NavQ95 Manifest non-SDK
+
+> [!WARNING]
+> This manifest is for advanced users and is NOT the validated NXP SDK Manifest.
+>
+> Please go here for the SDK: https://github.com/NXP-Robotics/robotics-sdk
+> or here for the SDK manifest: https://github.com/NXP-Robotics/robotics-linux-manifest
+
 
 The [IMX yocto project users guide](https://www.nxp.com/docs/en/user-guide/UG10164.pdf) contains
 detailed explanation on how to an build SD card image for the various iMX devices. For the NavQ95 there are a few exception that need to be taken
